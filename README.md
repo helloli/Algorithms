@@ -1,6 +1,6 @@
 # Algorithms
 
-## three sum 三数相加问题
+## 一、three sum 三数相加问题
 
 https://leetcode.com/problems/3sum/
 
@@ -14,7 +14,7 @@ https://leetcode.com/problems/3sum/
 2. 遍历数组，设置两个指针，一个从当前 index 开始往右，一个从最右往左，这三个值的和如果等于 target 则记录下来，如果大于则右边指针向左移动，小于则左侧指针向右移动，如果移动过程中发现值相等则直接继续移动
 3. 遍历的出口是当前值大于等于 0
 
-## trapping rain water 雨水收集问题
+## 二、trapping rain water 雨水收集问题
 
 https://leetcode.com/problems/trapping-rain-water/
 https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/uncategorized/rain-terraces
@@ -43,7 +43,7 @@ https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/unc
 2. 从右往左遍历，重复1的步骤，得到 rightTotal
 3. 发现这两个部分阴影部分的面积就是积水的面积，计算方法为  bigArea = leftTopValue * 数组长度; result = bigArea - (bigArea-leftTotal) - (bigArea-rightTotal) - total
 
-## Climbing Stairs 爬楼梯问题(斐波那契数列)
+## 三、Climbing Stairs 爬楼梯问题(斐波那契数列)
 
 ### 问题描述
 
@@ -53,7 +53,7 @@ https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/unc
 
 带缓存的斐波那契数列
 
-## maximum-subarray 最大子序列
+## 四、maximum-subarray 最大子序列
 
 https://leetcode.com/problems/maximum-subarray/
 https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/sets/maximum-subarray
@@ -73,5 +73,35 @@ var maxSubArray = function(nums) {
 };
 ```
 
-## Valid Parentheses 括号检测
+## 五、Merge Sorted Array 排序数组合并
+
+https://leetcode.com/problems/merge-sorted-array/
+### 问题描述
+
+两个排序好了的数组长度分别为 m 和 n，合并成一个排序好的了数组，要求不返回新的数组，直接修改第一个数组的值
+
+### 解法
+
+1. 设置两个指针 i, j 分别指向两个数组的末尾
+2. 设置一个指针 p 放在第一个数组的 m+n 处
+3. 比较 i 和 j 处的值的大小，把大的放在 p 处，把 p 左移，i 和 j 处数字比较大的那个指针左移
+4. 直到 i 或者 j 小于 0 时作为出口处理q
+
+```javascript
+
+```
+
+## 六、spiral-matrix 螺旋矩阵
+
+https://leetcode.com/problems/spiral-matrix/
+
+### 问题描述
+
+二维数组表示的矩阵，顺时针遍历出它的值到一个数组里
+
+### 解法
+
+1. 
+
+## 七、快速排序
 
