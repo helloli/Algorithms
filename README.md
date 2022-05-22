@@ -11,8 +11,45 @@ https://leetcode.com/problems/3sum/
 ### 解答
 
 1. 考虑到时间复杂度肯定大于等于 O(n²) 可以先用 sort 排序，从左到右依次增大
-2. 遍历数组，设置两个指针，一个从当前 index 开始往右，一个从最右往左，这三个值的和如果等于 target 则记录下来，如果大于则右边指针向左移动，小于则左侧指针向右移动，如果移动过程中发现值相等则直接继续移动
+2. 从左到右遍历数组，设置三个指针，当前index指针，一个从当前 index 开始往右的指针，一个从最右往左的指针，这三个值的和如果等于 target 则记录下来，如果大于则右边指针向左移动，小于则左侧指针向右移动，如果移动过程中发现值相等则直接继续移动
 3. 遍历的出口是当前值大于等于 0
+
+### 代码
+```javascript
+function threeSum(nums) {
+  const results = []
+  if (nums.length < 3) return results;
+  nums = nums.sort((a, b) => a - b);
+  let target = 0;
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    if (nums[i] > target) break;
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+    let j = i + 1;
+    let k = nums.length - 1;
+
+    while (j < k) {
+      let sum = nums[i] + nums[j] + nums[k];
+      if (sum === target) {
+        results.push([nums[i], nums[j], nums[k]]);
+
+        while (nums[j] === nums[j + 1]) j++;
+        while (nums[k] === nums[k - 1]) k--;
+
+        j++;
+        k--;
+      } else if (sum < target) {
+        j++;
+      } else {
+        k--;
+      }
+    }
+  }
+
+  return results;
+}
+```
 
 ## 二、trapping rain water 雨水收集问题
 
@@ -71,6 +108,59 @@ var maxSubArray = function(nums) {
   }
   return Math.max(...nums)
 };
+```
+
+### 变形1：最长不重复子串
+
+```javascript
+var lengthOfLongestSubstring = function(s) {
+  if (s === null) {
+    return 0;
+  }
+  if (s.length <= 1) {
+    return s.length;
+  }
+  
+  let longest = 1;
+  let i = 0;
+  let j = 1;
+	
+  while (j < s.length) {
+    let p = s.substring(i, j).indexOf(s.charAt(j));
+    if (p > -1) {
+      i += p + 1;
+    } else {
+      longest = Math.max(longest, j - i + 1);
+    }
+        
+    j ++;
+  }
+  
+  return longest;
+};
+```
+
+### 变形2：所有不重复子串
+
+```javascript
+function findSubstring(s) {
+  let i = 0;
+  let j = 1;
+  let result = 0;
+
+  while (j < s.length) {
+    const p = s.substring(i, j).indexOf(s.charAt(j));
+    result += (j - i);
+
+    if (p > -1) {
+      i = p + 1;
+    }
+
+    j += 1;
+  }
+
+  return result + j - i;
+}
 ```
 
 ## 五、Merge Sorted Array 排序数组合并
