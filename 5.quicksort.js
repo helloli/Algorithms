@@ -35,4 +35,4 @@
   return quickSort(nums, 0, nums.length - 1);
 };
 
-console.log(sortArray([-1, 2, -8, -10]));
+console.log(sortArray([-1, 2, -8, -10, 4, -435, 4, 0, -1, -8]));
