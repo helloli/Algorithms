@@ -195,3 +195,111 @@ https://leetcode.com/problems/spiral-matrix/
 
 ## 七、快速排序
 
+## 八、最长递增子数组
+https://leetcode.com/problems/longest-increasing-subsequence/description/
+设置一个 DP 数组，每个字段表示如果为这个长度的时候，使得最长递增值为当前数组下标的子数组的最后一个值为最小的值。
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function(nums) {
+    if (nums.length === 0) {
+        return 0;
+    }
+
+    const dp = [nums[0]];
+
+    for (let i = 1, l = nums.length; i < l; i ++) {
+        if (nums[i] > dp[dp.length - 1]) {
+            dp.push(nums[i]);
+        } else {
+            const position = bs(dp, nums[i]);
+            dp[position] = nums[i];
+        }
+    }
+
+    return dp.length;
+};
+
+var bs = function (arr, num) {
+    let i = 0;
+    let j = arr.length - 1;
+    while (i < j) {
+        let mid = Math.floor((i + j) / 2);
+        if (arr[mid] >= num) {
+            j = mid;
+        } else {
+            i = mid + 1;
+        }
+    }
+    return i;
+}
+```
+
+## 九、最长递增子数组
+https://leetcode.com/problems/maximum-length-of-pair-chain/description/
+先把数组变成有序数组。设置一个一维数组的 DP，双指针遍历，一个指针 i 遍历数组，一个指针 j 从头开始遍历到当前位置，如果 j 位置的最大值小于 i 位置的最小值，那就把 dp[i] 的值设置成 dp[i] 和 dp[j]+1 的较大那个值。
+
+```javascript
+/**
+ * @param {number[][]} pairs
+ * @return {number}
+ */
+/**
+    [[1,2],[1,3],[3,4],[4,5],[5,6],[6,8]]
+                  ↑  
+    dp:
+        0   1   2   3   4   5
+        1   1   3   1   1   1
+
+ */
+var findLongestChain = function(pairs) {
+    // better to be sorted
+    const sortedPairs = pairs.sort((a, b) => a[0] - b[0]);
+
+    // dp init
+    const dp = new Array(sortedPairs.length).fill(1);
+
+    // transfer equation
+    for (let i = 1; i < sortedPairs.length; i ++) {
+        for (let j = 0; j < i; j ++) {
+            if (sortedPairs[j][1] < sortedPairs[i][0]) {
+                dp[i] = Math.max(dp[i], dp[j] + 1)
+            }
+        }
+    }
+
+    return Math.max(...dp);
+};
+```
+
+## 十、最长摆动子序列
+https://leetcode.com/problems/wiggle-subsequence/description/
+就是子序列里的值大小交替
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var wiggleMaxLength = function(nums) {
+    // [i, j]
+    // .        j       .
+    //      i       .
+    const dp = Array.from({ length: nums.length }, () => [1, 1])
+
+    for (let i = 0; i < nums.length; i ++) {
+        for (let j = 0; j < i; j ++) {
+            if (nums[i] > nums[j]) {
+                dp[i][1] = Math.max(dp[i][1], dp[j][0] + 1)
+            } else if (nums[i] < nums[j]) {
+                dp[i][0] = Math.max(dp[i][0], dp[j][1] + 1)
+            }
+        }
+    }
+
+    return Math.max(...dp.flat())
+};
+```
